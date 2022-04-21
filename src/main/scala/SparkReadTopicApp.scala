@@ -1,18 +1,26 @@
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{DataFrame, SparkSession}
 
 object SparkReadTopicApp extends App {
 
-  val spark = SparkSession
-    .builder
+  val spark: SparkSession = SparkSession
+    .builder()
     .master("local[*]")
-    .appName("StructuredNetworkWordCount")
+    .appName("SparkReadTopicApp")
+    .config("spark.some.config.option", "some-value")
     .getOrCreate()
 
-  val records = spark
+  val records: DataFrame = spark
     .readStream
     .format("kafka")
     .option("kafka.bootstrap.servers", ":9092")
     .option("subscribe", "input")
     .load()
+
+  records
+    .writeStream
+    .format("console")
+    .option("truncate", value = false)
+    .start()
+    .awaitTermination()
 
 }

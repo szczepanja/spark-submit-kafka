@@ -9,11 +9,13 @@ object SparkReadTopicApp extends App {
     .config("spark.some.config.option", "some-value")
     .getOrCreate()
 
+  val topic = if (args.length > 0) args(0) else "input"
+
   val records: DataFrame = spark
     .readStream
     .format("kafka")
     .option("kafka.bootstrap.servers", ":9092")
-    .option("subscribe", "input")
+    .option("subscribe", topic)
     .load()
 
   import spark.implicits._

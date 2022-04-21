@@ -8,6 +8,4 @@ lazy val root = (project in file("."))
   )
 
 libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.2.1"
-libraryDependencies += "org.apache.kafka" %% "kafka" % "3.1.0"
-libraryDependencies += "org.slf4j" % "slf4j-api" % "1.7.36"
-libraryDependencies += "org.slf4j" % "slf4j-jdk14" % "1.7.36"
+libraryDependencies += "org.apache.spark" %% "spark-sql-kafka-0-10" % "3.2.1"

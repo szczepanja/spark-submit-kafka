@@ -16,7 +16,11 @@ object SparkReadTopicApp extends App {
     .option("subscribe", "input")
     .load()
 
-  records
+  import spark.implicits._
+
+  val newValue = records.select('value cast ("string"))
+
+  newValue
     .writeStream
     .format("console")
     .option("truncate", value = false)
